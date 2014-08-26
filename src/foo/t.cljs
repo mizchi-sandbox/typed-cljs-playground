@@ -8,14 +8,20 @@
 (ann bar [t/Number -> t/Number])
 (defn bar [n] n)
 
+(ann _bar [t/Number -> t/Number])
+(defn _bar [n] foo)
+
 (ann baz [t/Number t/String -> t/String])
 (defn baz [n str] str)
 
-; (ann x-point [{:x t/Number :y t/Number} -> t/Number])
-; (defn x-point [p] 1)
+(ann x-point [(HMap :mandatory {:x t/Number :y t/Number}) -> t/Number])
+(defn x-point [p] (:x p))
 
-; (ann-form #(+ 1 %) [t/Number -> t/Number])
-; (ann-form (fn [n] n) [t/Number -> t/Number])
+(ann fst [(t/Seqable t/Number) -> t/Number])
+(defn fst [l] (nth l 0))
 
-; (ann id (t/U -> t/U))
-; (defn id [x] x)
+(fst [1 2 3])
+
+(ann l (t/Seqable t/Number))
+(def l [1 2 3])
+(fst l)
